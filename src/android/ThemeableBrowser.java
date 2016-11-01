@@ -77,6 +77,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class ThemeableBrowser extends CordovaPlugin {
@@ -801,7 +803,13 @@ public class ThemeableBrowser extends CordovaPlugin {
                     CookieManager.getInstance().removeSessionCookie();
                 }
 
-                inAppWebView.loadUrl(url);
+
+                Map<String, String> extraHeaders = new HashMap<String, String>();
+                if (features.authorization != null) {
+                    extraHeaders.put("Authorization",features.authorization);
+                }
+
+                inAppWebView.loadUrl(url,extraHeaders);
                 inAppWebView.getSettings().setLoadWithOverviewMode(true);
                 inAppWebView.getSettings().setUseWideViewPort(true);
                 inAppWebView.requestFocus();
@@ -1396,6 +1404,7 @@ public class ThemeableBrowser extends CordovaPlugin {
 
         public Toolbar toolbar;
         public Title title;
+        public String authorization;
         public BrowserButton backButton;
         public BrowserButton forwardButton;
         public BrowserButton closeButton;

@@ -298,7 +298,7 @@
         self.themeableBrowserViewController.webView.suppressesIncrementalRendering = browserOptions.suppressesincrementalrendering;
     }
 
-    [self.themeableBrowserViewController navigateTo:url];
+    [self.themeableBrowserViewController navigateTo:url withBrowserOptions:browserOptions];
     if (!browserOptions.hidden) {
         [self show:nil withAnimation:!browserOptions.disableAnimation];
     }
@@ -1196,9 +1196,14 @@
     [self.webView reload];
 }
 
-- (void)navigateTo:(NSURL*)url
+- (void)navigateTo:(NSURL*)url withBrowserOptions:(CDVThemeableBrowserOptions*)options
 {
-    NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    //NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
+    if (options.authorization) {
+        [request setValue:options.authorization forHTTPHeaderField:@"Authorization"];
+    }
+    
 
     if (_userAgentLockToken != 0) {
         [self.webView loadRequest:request];
@@ -1584,6 +1589,7 @@
         self.disallowoverscroll = NO;
 
         self.statusbar = nil;
+        self.authorization = nil;
         self.toolbar = nil;
         self.title = nil;
         self.backButton = nil;

@@ -37,6 +37,7 @@
 
 @property (nonatomic) NSString* presentationstyle;
 @property (nonatomic) NSString* transitionstyle;
+@property (nonatomic) NSString* authorization;
 
 @property (nonatomic) BOOL zoom;
 @property (nonatomic) BOOL mediaplaybackrequiresuseraction;
@@ -116,7 +117,7 @@
 
 - (void)close;
 - (void)reload;
-- (void)navigateTo:(NSURL*)url;
+- (void)navigateTo:(NSURL*)url withBrowserOptions:(CDVThemeableBrowserOptions*)options ;
 - (void)showLocationBar:(BOOL)show;
 - (void)showToolBar:(BOOL)show : (NSString*) toolbarPosition;
 - (void)setCloseButtonTitle:(NSString*)title;
