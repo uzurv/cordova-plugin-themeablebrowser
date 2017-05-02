@@ -119,6 +119,11 @@
     return YES;
   }
 
+  NSString *q = @"target=system";
+  if ([url query] && ([[url query] rangeOfString: q ].location != NSNotFound)) {
+        return YES;
+  }
+
   return NO;
 }
 
